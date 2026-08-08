@@ -260,7 +260,7 @@ export default function Landing() {
             <div className="w-full max-w-sm bg-[#0A0A0A] border border-[#262626] rounded-2xl shadow-2xl relative overflow-hidden">
               <button 
                 onClick={() => setShowLoginModal(false)}
-                className="absolute top-4 right-4 text-ab-muted hover:text-white transition-colors"
+                className="absolute top-4 right-4 text-ab-muted hover:text-white transition-colors btn-interactive btn-interactive-ghost p-1 rounded-md"
               >
                 <X className="w-5 h-5" />
               </button>

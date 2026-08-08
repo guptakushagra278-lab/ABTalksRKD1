@@ -21,4 +21,46 @@
   .pb-safe {
     padding-bottom: env(safe-area-inset-bottom, 16px);
   }
+
+  .btn-interactive {
+    transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+  }
+  
+  .btn-interactive:active {
+    transform: scale(0.98);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .btn-interactive:hover {
+      transform: scale(1.03);
+    }
+    
+    .btn-interactive-primary:hover {
+      box-shadow: 0 0 20px rgba(183, 243, 74, 0.35);
+    }
+    
+    .btn-interactive-secondary:hover {
+      box-shadow: 0 0 12px rgba(183, 243, 74, 0.15);
+      border-color: rgba(183, 243, 74, 0.3);
+    }
+
+    .btn-interactive-ghost:hover {
+      box-shadow: 0 0 10px rgba(183, 243, 74, 0.1);
+      color: var(--color-ab-accent);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn-interactive {
+      transition-property: box-shadow, background-color, border-color, color !important;
+    }
+    .btn-interactive:active {
+      transform: none;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .btn-interactive:hover {
+        transform: none;
+      }
+    }
+  }
 }

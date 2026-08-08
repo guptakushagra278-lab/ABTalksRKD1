@@ -136,7 +136,7 @@ export default function ChallengeDay() {
             <div className="flex items-center justify-between mb-6">
               <button 
                 onClick={() => navigate("/dashboard")}
-                className="text-[10px] text-ab-muted font-bold hover:text-ab-text transition-colors uppercase"
+                className="text-[10px] text-ab-muted font-bold hover:text-ab-text transition-colors uppercase btn-interactive btn-interactive-ghost px-2 py-1 -ml-2 rounded"
               >
                 ← BACK
               </button>

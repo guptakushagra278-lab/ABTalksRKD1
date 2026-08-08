@@ -34,7 +34,7 @@ export default function Dashboard() {
               <p className="text-[10px] font-mono text-ab-muted uppercase tracking-widest">Good Evening, {user.username.toUpperCase()}</p>
               <button 
                 onClick={() => { logout(); navigate('/'); }} 
-                className="text-[10px] text-ab-muted hover:text-white uppercase tracking-widest font-bold"
+                className="text-[10px] text-ab-muted hover:text-white uppercase tracking-widest font-bold btn-interactive btn-interactive-ghost px-2 py-1 -mr-2 rounded"
               >
                 Log out
               </button>

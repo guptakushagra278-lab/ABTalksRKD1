@@ -20,8 +20,8 @@ export default function BottomNav() {
               key={link.to}
               to={link.to}
               className={cn(
-                "flex flex-col items-center justify-center gap-1 transition-colors",
-                isActive ? "text-ab-accent" : "text-ab-muted hover:text-ab-text opacity-40 hover:opacity-100"
+                "flex flex-col items-center justify-center gap-1 transition-colors btn-interactive btn-interactive-ghost p-2 rounded-xl",
+                isActive ? "text-ab-accent" : "text-ab-muted hover:text-ab-text opacity-80 hover:opacity-100"
               )}
             >
               <link.icon className="w-5 h-5" />
