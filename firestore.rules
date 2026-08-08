@@ -1,0 +1,76 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['name', 'track', 'currentDay', 'updatedAt']) &&
+             data.name is string && data.name.size() <= 100 &&
+             data.track is string && data.track.size() <= 100 &&
+             data.currentDay is number &&
+             data.updatedAt is string &&
+             ( !('totalDays' in data) || data.totalDays is number ) &&
+             ( !('currentStreak' in data) || data.currentStreak is number ) &&
+             ( !('bestStreak' in data) || data.bestStreak is number ) &&
+             ( !('completedBuilds' in data) || data.completedBuilds is number ) &&
+             ( !('linkedinSubmissions' in data) || data.linkedinSubmissions is number ) &&
+             ( !('momentum' in data) || data.momentum is number );
+    }
+
+    match /users/{userId} {
+      allow get: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidId(userId) && isValidUserProfile(incoming()) && incoming().keys().size() <= 10;
+      allow update: if isOwner(userId) && isValidUserProfile(incoming()) && (
+        incoming().diff(existing()).affectedKeys().hasOnly([
+          'name', 'track', 'currentDay', 'totalDays', 'currentStreak', 'bestStreak', 'completedBuilds', 'linkedinSubmissions', 'momentum', 'updatedAt'
+        ])
+      );
+    }
+    
+    function isValidBuildProject(data) {
+      return data.keys().hasAll(['day', 'title', 'createdAt', 'updatedAt']) &&
+             data.day is number &&
+             data.title is string && data.title.size() <= 200 &&
+             data.createdAt is string &&
+             data.updatedAt is string &&
+             ( !('githubRepo' in data) || (data.githubRepo is string && data.githubRepo.size() <= 500) ) &&
+             ( !('githubCommit' in data) || (data.githubCommit is string && data.githubCommit.size() <= 500) ) &&
+             ( !('linkedinPost' in data) || (data.linkedinPost is string && data.linkedinPost.size() <= 500) ) &&
+             ( !('liveUrl' in data) || (data.liveUrl is string && data.liveUrl.size() <= 500) );
+    }
+
+    function isValidBuildProjectUpdate(data) {
+      return data.keys().hasAll(['day', 'title', 'createdAt', 'updatedAt']) &&
+             data.day is number &&
+             data.title is string && data.title.size() <= 200 &&
+             data.updatedAt is string &&
+             ( !('githubRepo' in data) || (data.githubRepo is string && data.githubRepo.size() <= 500) ) &&
+             ( !('githubCommit' in data) || (data.githubCommit is string && data.githubCommit.size() <= 500) ) &&
+             ( !('linkedinPost' in data) || (data.linkedinPost is string && data.linkedinPost.size() <= 500) ) &&
+             ( !('liveUrl' in data) || (data.liveUrl is string && data.liveUrl.size() <= 500) );
+    }
+
+    match /users/{userId}/builds/{buildId} {
+      allow list: if isOwner(userId);
+      allow get: if isOwner(userId) && isValidId(buildId);
+      allow create: if isOwner(userId) && isValidId(buildId) && isValidBuildProject(incoming()) && incoming().keys().size() <= 8;
+      allow update: if isOwner(userId) && isValidId(buildId) && isValidBuildProjectUpdate(incoming()) && incoming().createdAt == existing().createdAt && (
+        incoming().diff(existing()).affectedKeys().hasOnly([
+          'day', 'title', 'githubRepo', 'githubCommit', 'linkedinPost', 'liveUrl', 'updatedAt'
+        ])
+      );
+      allow delete: if isOwner(userId) && isValidId(buildId);
+    }
+  }
+}

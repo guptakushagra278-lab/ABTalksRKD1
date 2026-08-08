@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ab-bg: #080808;
+  --color-ab-card: #161616;
+  --color-ab-border: #1A1A1A;
+  --color-ab-accent: #B7F34A;
+  --color-ab-accent-hover: #a3e62f;
+  --color-ab-muted: #52525B;
+  --color-ab-text: #E4E4E7;
+  --color-ab-secondary: #A1A1AA;
+}
+
+@layer base {
+  body {
+    @apply bg-ab-bg text-ab-text antialiased;
+  }
+}
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "track": { "type": "string", "maxLength": 100 },
+        "currentDay": { "type": "number" },
+        "totalDays": { "type": "number" },
+        "currentStreak": { "type": "number" },
+        "bestStreak": { "type": "number" },
+        "completedBuilds": { "type": "number" },
+        "linkedinSubmissions": { "type": "number" },
+        "momentum": { "type": "number" },
+        "updatedAt": { "type": "string", "description": "Timestamp" }
+      },
+      "required": ["name", "track", "currentDay", "updatedAt"]
+    },
+    "BuildProject": {
+      "title": "BuildProject",
+      "description": "A daily project built by the user",
+      "type": "object",
+      "properties": {
+        "day": { "type": "number" },
+        "title": { "type": "string", "maxLength": 200 },
+        "githubRepo": { "type": "string", "maxLength": 500 },
+        "githubCommit": { "type": "string", "maxLength": 500 },
+        "linkedinPost": { "type": "string", "maxLength": 500 },
+        "liveUrl": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "description": "Timestamp" },
+        "updatedAt": { "type": "string", "description": "Timestamp" }
+      },
+      "required": ["day", "title", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User profile document"
+    },
+    "/users/{userId}/builds/{buildId}": {
+      "schema": { "$ref": "#/entities/BuildProject" },
+      "description": "User's submitted build projects"
+    }
+  }
+}
