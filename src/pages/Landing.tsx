@@ -44,16 +44,13 @@ export default function Landing() {
     <AppShell showNav={false}>
       <div className="flex flex-col min-h-screen pb-24">
         {/* Header */}
-        <header className="px-6 py-5 flex items-center justify-between border-b border-ab-border">
-          <div className="flex items-center gap-2">
-            <div className="w-6 h-6 bg-ab-accent rounded-md flex items-center justify-center">
-              <div className="w-3 h-3 bg-black rounded-sm"></div>
-            </div>
-            <span className="font-bold tracking-tighter text-lg text-ab-text">ABTALKS</span>
+        <header className="px-6 py-5 flex items-center justify-center border-b border-ab-border relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#B7F34A]/5 to-transparent pointer-events-none" />
+          <div className="flex items-center justify-center relative">
+            <span className="font-black tracking-tighter text-2xl text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-ab-muted drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+              AB<span className="text-ab-accent drop-shadow-[0_0_15px_rgba(183,243,74,0.5)]">TALKS</span>
+            </span>
           </div>
-          <Button variant="ghost" className="px-3 py-1.5 text-[10px]" onClick={() => setShowLoginModal(true)}>
-            Login
-          </Button>
         </header>
 
         {/* Hero Section */}
