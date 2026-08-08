@@ -1,19 +1,81 @@
 @import "tailwindcss";
 
-@theme {
+:root {
   --color-ab-bg: #080808;
   --color-ab-card: #161616;
+  --color-ab-card-alt: #111111;
+  --color-ab-nav-hover: #111111;
+  --color-ab-surface: #0A0A0A;
+  --color-ab-surface-alt: #1A1A1A;
   --color-ab-border: #1A1A1A;
+  --color-ab-border-alt: #262626;
+  --color-ab-black: #000000;
+  
   --color-ab-accent: #B7F34A;
+  --color-ab-accent-fg: #080808;
   --color-ab-accent-hover: #a3e62f;
+  --color-ab-btn-secondary-bg: #E4E4E7;
+  --color-ab-btn-secondary-fg: #080808;
   --color-ab-muted: #52525B;
   --color-ab-text: #E4E4E7;
   --color-ab-secondary: #A1A1AA;
+
+  --color-ab-glow: rgba(183, 243, 74, 0.35);
+  --color-ab-glow-secondary: rgba(183, 243, 74, 0.15);
+  --color-ab-glow-ghost: rgba(183, 243, 74, 0.1);
+  --color-ab-border-glow: rgba(183, 243, 74, 0.3);
+}
+
+:root.light {
+  --color-ab-bg: #EAF0F6;
+  --color-ab-card: #FFFFFF;
+  --color-ab-card-alt: #F8FBFD;
+  --color-ab-nav-hover: #EAF0F6;
+  --color-ab-surface: #EAF0F6;
+  --color-ab-surface-alt: #EAF0F6;
+  --color-ab-border: #90CAF9;
+  --color-ab-border-alt: #90CAF9;
+  --color-ab-black: #FFFFFF;
+  
+  --color-ab-accent: #2196F3;
+  --color-ab-accent-fg: #FFFFFF;
+  --color-ab-accent-hover: #1976D2;
+  --color-ab-btn-secondary-bg: #90CAF9;
+  --color-ab-btn-secondary-fg: #0D47A1;
+  --color-ab-muted: rgba(13, 71, 161, 0.6);
+  --color-ab-text: #0D47A1;
+  --color-ab-secondary: rgba(13, 71, 161, 0.8);
+
+  --color-ab-glow: rgba(33, 150, 243, 0.35);
+  --color-ab-glow-secondary: rgba(33, 150, 243, 0.15);
+  --color-ab-glow-ghost: rgba(33, 150, 243, 0.1);
+  --color-ab-border-glow: rgba(33, 150, 243, 0.3);
+}
+
+@theme {
+  --color-ab-bg: var(--color-ab-bg);
+  --color-ab-card: var(--color-ab-card);
+  --color-ab-card-alt: var(--color-ab-card-alt);
+  --color-ab-nav-hover: var(--color-ab-nav-hover);
+  --color-ab-surface: var(--color-ab-surface);
+  --color-ab-surface-alt: var(--color-ab-surface-alt);
+  --color-ab-border: var(--color-ab-border);
+  --color-ab-border-alt: var(--color-ab-border-alt);
+  --color-ab-black: var(--color-ab-black);
+  
+  --color-ab-accent: var(--color-ab-accent);
+  --color-ab-accent-fg: var(--color-ab-accent-fg);
+  --color-ab-accent-hover: var(--color-ab-accent-hover);
+  --color-ab-btn-secondary-bg: var(--color-ab-btn-secondary-bg);
+  --color-ab-btn-secondary-fg: var(--color-ab-btn-secondary-fg);
+  --color-ab-muted: var(--color-ab-muted);
+  --color-ab-text: var(--color-ab-text);
+  --color-ab-secondary: var(--color-ab-secondary);
 }
 
 @layer base {
   body {
-    @apply bg-ab-bg text-ab-text antialiased;
+    @apply bg-ab-bg text-ab-text antialiased transition-colors duration-200;
   }
 }
 
@@ -36,16 +98,16 @@
     }
     
     .btn-interactive-primary:hover {
-      box-shadow: 0 0 20px rgba(183, 243, 74, 0.35);
+      box-shadow: 0 0 20px var(--color-ab-glow);
     }
     
     .btn-interactive-secondary:hover {
-      box-shadow: 0 0 12px rgba(183, 243, 74, 0.15);
-      border-color: rgba(183, 243, 74, 0.3);
+      box-shadow: 0 0 12px var(--color-ab-glow-secondary);
+      border-color: var(--color-ab-border-glow);
     }
 
     .btn-interactive-ghost:hover {
-      box-shadow: 0 0 10px rgba(183, 243, 74, 0.1);
+      box-shadow: 0 0 10px var(--color-ab-glow-ghost);
       color: var(--color-ab-accent);
     }
   }

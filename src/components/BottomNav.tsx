@@ -11,7 +11,7 @@ export default function BottomNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#0A0A0A] border-t border-ab-border pb-safe">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-ab-card border-t border-ab-border pb-safe">
       <div className="max-w-md mx-auto px-5 h-[72px] flex items-center justify-around">
         {links.map((link) => {
           const isActive = location.pathname === link.to;
@@ -20,8 +20,8 @@ export default function BottomNav() {
               key={link.to}
               to={link.to}
               className={cn(
-                "flex flex-col items-center justify-center gap-1 transition-colors btn-interactive btn-interactive-ghost p-2 rounded-xl",
-                isActive ? "text-ab-accent" : "text-ab-muted hover:text-ab-text opacity-80 hover:opacity-100"
+                "flex flex-col items-center justify-center gap-1 transition-colors btn-interactive btn-interactive-ghost p-2 rounded-xl hover:bg-ab-nav-hover",
+                isActive ? "text-ab-accent bg-ab-nav-hover" : "text-ab-muted hover:text-ab-text opacity-80 hover:opacity-100"
               )}
             >
               <link.icon className="w-5 h-5" />

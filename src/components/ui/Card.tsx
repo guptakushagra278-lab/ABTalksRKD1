@@ -8,7 +8,7 @@ type CardProps = React.HTMLAttributes<HTMLDivElement> & {
 export function Card({ children, className, ...props }: CardProps) {
   return (
     <div 
-      className={cn("bg-ab-card border border-[#262626] rounded-2xl overflow-hidden", className)}
+      className={cn("bg-ab-card border border-ab-border-alt rounded-2xl overflow-hidden", className)}
       {...props}
     >
       {children}

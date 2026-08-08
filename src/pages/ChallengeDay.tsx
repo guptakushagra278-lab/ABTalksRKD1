@@ -102,7 +102,7 @@ export default function ChallengeDay() {
           <h1 className="text-3xl font-black mb-2 tracking-tight uppercase text-ab-text">DAY {day} COMPLETE</h1>
           <p className="text-ab-secondary mb-8 text-sm">Your build has been submitted.</p>
           
-          <div className="bg-[#161616] border border-[#262626] rounded-2xl p-6 mb-10 w-full max-w-sm">
+          <div className="bg-ab-card border border-ab-border-alt rounded-2xl p-6 mb-10 w-full max-w-sm">
             <div className="inline-flex items-center text-ab-accent font-black text-xl italic mb-2">
               <Flame className="w-5 h-5 mr-2" fill="currentColor" />
               {user.currentStreak} DAY STREAK
@@ -129,7 +129,7 @@ export default function ChallengeDay() {
     <AppShell>
       <div className="px-4 pt-6 pb-28 flex flex-col items-center">
         
-        <div className="w-full max-w-[340px] bg-[#0A0A0A] border-[4px] border-ab-border rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col">
+        <div className="w-full max-w-[340px] bg-ab-surface border-[4px] border-ab-border rounded-[40px] shadow-2xl relative overflow-hidden flex flex-col">
           <div className="px-5 pt-8 pb-4">
             
             {/* Top Navigation */}
@@ -157,10 +157,10 @@ export default function ChallengeDay() {
               <h3 className="text-[10px] uppercase font-bold tracking-widest text-ab-muted mb-2">Today's Build</h3>
               <h2 className="text-2xl font-black uppercase text-ab-text mb-3 leading-tight">Responsive Startup Landing Page</h2>
               <div className="flex gap-2">
-                <div className="text-[9px] uppercase font-bold px-2 py-1 bg-[#1A1A1A] border border-[#262626] text-ab-secondary rounded">
+                <div className="text-[9px] uppercase font-bold px-2 py-1 bg-ab-surface-alt border border-ab-border-alt text-ab-secondary rounded">
                   45–60 MIN
                 </div>
-                <div className="text-[9px] uppercase font-bold px-2 py-1 bg-[#1A1A1A] border border-[#262626] text-ab-secondary rounded">
+                <div className="text-[9px] uppercase font-bold px-2 py-1 bg-ab-surface-alt border border-ab-border-alt text-ab-secondary rounded">
                   INTERMEDIATE
                 </div>
               </div>
@@ -196,31 +196,31 @@ export default function ChallengeDay() {
               <h3 className="text-[10px] uppercase font-bold tracking-widest text-ab-muted mb-3">What To Build</h3>
               
               <div className="space-y-3">
-                <div className="bg-[#161616] border border-[#262626] p-4 rounded-xl">
+                <div className="bg-ab-card border border-ab-border-alt p-4 rounded-xl">
                   <div className="text-[9px] font-mono font-bold text-ab-muted mb-1">01</div>
                   <h4 className="text-xs font-bold text-ab-text mb-1 uppercase tracking-wider">Hero</h4>
                   <p className="text-[11px] text-ab-secondary leading-relaxed">Startup name, strong headline, short supporting description, and primary CTA.</p>
                 </div>
                 
-                <div className="bg-[#161616] border border-[#262626] p-4 rounded-xl">
+                <div className="bg-ab-card border border-ab-border-alt p-4 rounded-xl">
                   <div className="text-[9px] font-mono font-bold text-ab-muted mb-1">02</div>
                   <h4 className="text-xs font-bold text-ab-text mb-1 uppercase tracking-wider">Value Proposition</h4>
                   <p className="text-[11px] text-ab-secondary leading-relaxed">Explain what the fictional startup does. Show 2–4 key benefits/features.</p>
                 </div>
 
-                <div className="bg-[#161616] border border-[#262626] p-4 rounded-xl">
+                <div className="bg-ab-card border border-ab-border-alt p-4 rounded-xl">
                   <div className="text-[9px] font-mono font-bold text-ab-muted mb-1">03</div>
                   <h4 className="text-xs font-bold text-ab-text mb-1 uppercase tracking-wider">Social Proof</h4>
                   <p className="text-[11px] text-ab-secondary leading-relaxed">Establish credibility with a customer quote, user count, company logos, or a rating/stat.</p>
                 </div>
 
-                <div className="bg-[#161616] border border-[#262626] p-4 rounded-xl">
+                <div className="bg-ab-card border border-ab-border-alt p-4 rounded-xl">
                   <div className="text-[9px] font-mono font-bold text-ab-muted mb-1">04</div>
                   <h4 className="text-xs font-bold text-ab-text mb-1 uppercase tracking-wider">Final CTA</h4>
                   <p className="text-[11px] text-ab-secondary leading-relaxed">End with a strong call-to-action that encourages the visitor to take the next step.</p>
                 </div>
 
-                <div className="bg-[#161616] border border-[#262626] p-4 rounded-xl">
+                <div className="bg-ab-card border border-ab-border-alt p-4 rounded-xl">
                   <div className="text-[9px] font-mono font-bold text-ab-muted mb-1">05</div>
                   <h4 className="text-xs font-bold text-ab-text mb-1 uppercase tracking-wider">Responsive Experience</h4>
                   <p className="text-[11px] text-ab-secondary leading-relaxed">Make sure the page works well on mobile, tablet, and desktop. The mobile version is primary.</p>
@@ -240,19 +240,19 @@ export default function ChallengeDay() {
             <div className="mb-8">
               <h3 className="text-[10px] uppercase font-bold tracking-widest text-ab-muted mb-3">What Good Looks Like</h3>
               <div className="grid grid-cols-2 gap-2">
-                <div className="bg-[#111] p-3 rounded-lg border border-[#1e1e1e]">
+                <div className="bg-ab-card-alt p-3 rounded-lg border border-ab-border-alt">
                   <p className="text-[10px] font-bold text-ab-text uppercase mb-1">Clear</p>
                   <p className="text-[9px] text-ab-secondary">A visitor understands the product within seconds.</p>
                 </div>
-                <div className="bg-[#111] p-3 rounded-lg border border-[#1e1e1e]">
+                <div className="bg-ab-card-alt p-3 rounded-lg border border-ab-border-alt">
                   <p className="text-[10px] font-bold text-ab-text uppercase mb-1">Responsive</p>
                   <p className="text-[9px] text-ab-secondary">The layout feels intentional at every screen size.</p>
                 </div>
-                <div className="bg-[#111] p-3 rounded-lg border border-[#1e1e1e]">
+                <div className="bg-ab-card-alt p-3 rounded-lg border border-ab-border-alt">
                   <p className="text-[10px] font-bold text-ab-text uppercase mb-1">Polished</p>
                   <p className="text-[9px] text-ab-secondary">Typography, spacing, alignment, and interactions feel considered.</p>
                 </div>
-                <div className="bg-[#111] p-3 rounded-lg border border-[#1e1e1e]">
+                <div className="bg-ab-card-alt p-3 rounded-lg border border-ab-border-alt">
                   <p className="text-[10px] font-bold text-ab-text uppercase mb-1">Actionable</p>
                   <p className="text-[9px] text-ab-secondary">The CTA is obvious and compelling.</p>
                 </div>
@@ -264,16 +264,16 @@ export default function ChallengeDay() {
               <details className="group">
                 <summary className="text-[10px] uppercase font-bold tracking-widest text-ab-accent cursor-pointer list-none flex items-center">
                   <span className="mr-2">Want to go further?</span>
-                  <span className="group-open:rotate-180 transition-transform text-[#B7F34A]">▼</span>
+                  <span className="group-open:rotate-180 transition-transform text-ab-accent">▼</span>
                 </summary>
-                <p className="text-xs text-ab-secondary leading-relaxed mt-3 pl-2 border-l-2 border-[#262626]">
+                <p className="text-xs text-ab-secondary leading-relaxed mt-3 pl-2 border-l-2 border-ab-border-alt">
                   If you finish early, add one thoughtful interaction or micro-animation that improves the experience without distracting from the content.
                 </p>
               </details>
             </div>
 
             {/* Divider */}
-            <div className="border-t border-[#262626] w-full mb-8"></div>
+            <div className="border-t border-ab-border-alt w-full mb-8"></div>
 
             {/* Ready to Submit */}
             <div className="mb-6 text-center">
@@ -282,7 +282,7 @@ export default function ChallengeDay() {
             </div>
 
             {/* Submission Form */}
-            <div className="bg-[#161616] p-4 rounded-xl border border-[#262626]">
+            <div className="bg-ab-card p-4 rounded-xl border border-ab-border-alt">
               <p className="text-[9px] uppercase font-bold text-ab-muted mb-3">Submission Proof</p>
               <form onSubmit={handleSubmit} className="space-y-3">
                 <Input 
@@ -321,8 +321,8 @@ export default function ChallengeDay() {
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
-                    <span className="flex items-center gap-2 text-[10px] font-mono text-[#52525B]">
-                      <div className="w-1.5 h-1.5 bg-black rounded-full animate-pulse"></div>
+                    <span className="flex items-center gap-2 text-[10px] font-mono text-ab-muted">
+                      <div className="w-1.5 h-1.5 bg-ab-bg rounded-full animate-pulse"></div>
                       PROCESSING...
                     </span>
                   ) : (

@@ -4,13 +4,15 @@ import AppShell from "@/src/components/AppShell";
 import { Button } from "@/src/components/ui/Button";
 import { Card, CardContent } from "@/src/components/ui/Card";
 import { Input } from "@/src/components/ui/Input";
-import { ArrowRight, Trophy, X, Loader2 } from "lucide-react";
+import { ArrowRight, Trophy, X, Loader2, Sun, Moon } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/src/components/Icons";
 import { useAuth } from "@/src/components/AuthProvider";
+import { useTheme } from "@/src/components/ThemeProvider";
 
 export default function Landing() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const { theme, setTheme } = useTheme();
   const [showLoginModal, setShowLoginModal] = useState(false);
   
   const [username, setUsername] = useState("");
@@ -44,23 +46,36 @@ export default function Landing() {
     <AppShell showNav={false}>
       <div className="flex flex-col min-h-screen pb-24">
         {/* Header */}
-        <header className="px-6 py-5 flex items-center justify-center border-b border-ab-border relative">
-          <div className="absolute inset-0 bg-gradient-to-b from-[#B7F34A]/5 to-transparent pointer-events-none" />
-          <div className="flex items-center justify-center relative">
-            <span className="font-black tracking-tighter text-2xl text-transparent bg-clip-text bg-gradient-to-r from-white via-white to-ab-muted drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-              AB<span className="text-ab-accent drop-shadow-[0_0_15px_rgba(183,243,74,0.5)]">TALKS</span>
+        <header className="px-6 py-5 flex items-center justify-between border-b border-ab-border relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-ab-accent/5 to-transparent pointer-events-none" />
+          
+          <div className="flex-1" /> {/* Spacer for centering */}
+          
+          <div className="flex items-center justify-center relative flex-1">
+            <span className="font-black tracking-tighter text-2xl text-transparent bg-clip-text bg-gradient-to-r from-ab-text via-ab-text to-ab-muted drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+              AB<span className="text-ab-accent drop-shadow-[0_0_15px_var(--color-ab-glow)]">TALKS</span>
             </span>
+          </div>
+          
+          <div className="flex-1 flex justify-end">
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2 text-ab-muted hover:text-ab-text transition-colors btn-interactive"
+              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
           </div>
         </header>
 
         {/* Hero Section */}
-        <section className="px-6 pt-10 pb-12 bg-[#0A0A0A] mx-4 mt-6 border-[4px] border-ab-border rounded-[40px] relative overflow-hidden flex flex-col shadow-2xl">
-          <div className="absolute top-0 left-0 right-0 h-4 bg-[#0A0A0A] flex justify-center items-end pb-1">
+        <section className="px-6 pt-10 pb-12 bg-ab-surface mx-4 mt-6 border-[4px] border-ab-border rounded-[40px] relative overflow-hidden flex flex-col shadow-2xl">
+          <div className="absolute top-0 left-0 right-0 h-4 bg-ab-surface flex justify-center items-end pb-1">
             <div className="w-12 h-1 bg-ab-border rounded-full"></div>
           </div>
           
           <div className="mb-6">
-            <span className="text-[10px] font-bold text-ab-muted uppercase tracking-widest bg-white/5 px-2 py-1 rounded-md">
+            <span className="text-[10px] font-bold text-ab-muted uppercase tracking-widest bg-ab-text/5 px-2 py-1 rounded-md">
               THE BUILDERS' CHALLENGE
             </span>
           </div>
@@ -94,17 +109,17 @@ export default function Landing() {
             </Button>
           </div>
 
-          <div className="flex items-center gap-6 pt-6 border-t border-[#262626]">
+          <div className="flex items-center gap-6 pt-6 border-t border-ab-border-alt">
             <div>
               <p className="text-sm font-black text-ab-text">60 DAYS</p>
               <p className="text-[9px] text-ab-muted uppercase font-bold tracking-widest mt-0.5">Challenge</p>
             </div>
-            <div className="w-px h-8 bg-[#262626]"></div>
+            <div className="w-px h-8 bg-ab-border-alt"></div>
             <div>
               <p className="text-sm font-black text-ab-text">1 BUILD</p>
               <p className="text-[9px] text-ab-muted uppercase font-bold tracking-widest mt-0.5">Every day</p>
             </div>
-            <div className="w-px h-8 bg-[#262626]"></div>
+            <div className="w-px h-8 bg-ab-border-alt"></div>
             <div>
               <p className="text-sm font-black text-ab-text">2 PROOFS</p>
               <p className="text-[9px] text-ab-muted uppercase font-bold tracking-widest mt-0.5">GitHub + LinkedIn</p>
@@ -113,7 +128,7 @@ export default function Landing() {
         </section>
 
         {/* ABTALKS MISSION / POSITIONING */}
-        <section className="px-6 py-20 bg-black text-center">
+        <section className="px-6 py-20 bg-ab-bg text-center">
           <h2 className="text-3xl md:text-5xl font-black tracking-tighter uppercase text-ab-text mb-2">
             RAW POTENTIAL<br/>
             <span className="text-ab-accent">×</span><br/>
@@ -131,7 +146,7 @@ export default function Landing() {
             DON'T JUST LEARN.<br/>BUILD PROOF.
           </h2>
           <div className="space-y-4">
-            <Card className="bg-[#111] border-[#262626]">
+            <Card className="border-ab-border-alt">
               <CardContent className="p-5">
                 <span className="font-mono text-ab-accent text-xs mb-2 block font-bold">01 — BUILD</span>
                 <p className="text-xs text-ab-secondary leading-relaxed">
@@ -139,7 +154,7 @@ export default function Landing() {
                 </p>
               </CardContent>
             </Card>
-            <Card className="bg-[#111] border-[#262626]">
+            <Card className="border-ab-border-alt">
               <CardContent className="p-5">
                 <span className="font-mono text-ab-accent text-xs mb-2 block font-bold">02 — PROVE</span>
                 <p className="text-xs text-ab-secondary leading-relaxed">
@@ -147,7 +162,7 @@ export default function Landing() {
                 </p>
               </CardContent>
             </Card>
-            <Card className="bg-[#111] border-[#262626]">
+            <Card className="border-ab-border-alt">
               <CardContent className="p-5">
                 <span className="font-mono text-ab-accent text-xs mb-2 block font-bold">03 — GET VISIBLE</span>
                 <p className="text-xs text-ab-secondary leading-relaxed">
@@ -159,7 +174,7 @@ export default function Landing() {
         </section>
 
         {/* HOW IT WORKS */}
-        <section id="how-it-works" className="px-6 py-12 bg-[#0A0A0A] border-y border-[#262626]">
+        <section id="how-it-works" className="px-6 py-12 bg-ab-surface border-y border-ab-border-alt">
           <h2 className="text-[10px] font-mono text-ab-muted uppercase tracking-widest mb-8">
             How it works
           </h2>
@@ -171,7 +186,7 @@ export default function Landing() {
               { num: "04", title: "Build your public streak", desc: "Turn 60 days of consistency into visible proof of your skills." }
             ].map((step, i) => (
               <div key={i} className="flex gap-4 items-start relative">
-                <div className="w-8 h-8 rounded-full bg-white/5 border border-[#262626] flex items-center justify-center shrink-0 mt-1">
+                <div className="w-8 h-8 rounded-full bg-ab-text/5 border border-ab-border-alt flex items-center justify-center shrink-0 mt-1">
                   <span className="font-mono text-ab-accent text-xs font-bold">{step.num}</span>
                 </div>
                 <div>
@@ -192,9 +207,9 @@ export default function Landing() {
           </h2>
           
           <div className="grid grid-cols-2 gap-3">
-            <Card className="bg-[#111] border-[#262626]">
+            <Card className="border-ab-border-alt">
               <CardContent className="p-4 flex flex-col items-center text-center">
-                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mb-3">
+                <div className="w-10 h-10 rounded-full bg-ab-text/5 flex items-center justify-center mb-3">
                   <GithubIcon className="w-5 h-5 text-ab-text" />
                 </div>
                 <h3 className="font-bold text-xs uppercase mb-1">GitHub</h3>
@@ -202,7 +217,7 @@ export default function Landing() {
               </CardContent>
             </Card>
 
-            <Card className="bg-[#111] border-[#262626]">
+            <Card className="border-ab-border-alt">
               <CardContent className="p-4 flex flex-col items-center text-center">
                 <div className="w-10 h-10 rounded-full bg-[#0077B5]/10 flex items-center justify-center mb-3">
                   <LinkedinIcon className="w-5 h-5 text-[#0077B5]" />
@@ -212,7 +227,7 @@ export default function Landing() {
               </CardContent>
             </Card>
 
-            <Card className="bg-[#111] border-[#262626]">
+            <Card className="border-ab-border-alt">
               <CardContent className="p-4 flex flex-col items-center text-center">
                 <div className="w-10 h-10 rounded-full bg-ab-accent/10 flex items-center justify-center mb-3">
                   <Trophy className="w-5 h-5 text-ab-accent" />
@@ -222,9 +237,9 @@ export default function Landing() {
               </CardContent>
             </Card>
 
-            <Card className="bg-[#111] border-[#262626]">
+            <Card className="border-ab-border-alt">
               <CardContent className="p-4 flex flex-col items-center text-center">
-                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center mb-3">
+                <div className="w-10 h-10 rounded-full bg-ab-text/5 flex items-center justify-center mb-3">
                   <div className="w-4 h-4 border-2 border-ab-text rounded-sm"></div>
                 </div>
                 <h3 className="font-bold text-xs uppercase mb-1">Build Vault</h3>
@@ -235,7 +250,7 @@ export default function Landing() {
         </section>
 
         {/* CTA Section */}
-        <section className="px-6 py-16 bg-black mt-auto border-t border-[#262626] text-center">
+        <section className="px-6 py-16 bg-ab-bg mt-auto border-t border-ab-border-alt text-center">
           <h2 className="text-3xl font-black tracking-tight mb-4 uppercase text-ab-text">
             READY TO BUILD?
           </h2>
@@ -256,11 +271,11 @@ export default function Landing() {
 
         {/* Login Modal */}
         {showLoginModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-            <div className="w-full max-w-sm bg-[#0A0A0A] border border-[#262626] rounded-2xl shadow-2xl relative overflow-hidden">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ab-bg/80 backdrop-blur-sm">
+            <div className="w-full max-w-sm bg-ab-card border border-ab-border-alt rounded-2xl shadow-2xl relative overflow-hidden">
               <button 
                 onClick={() => setShowLoginModal(false)}
-                className="absolute top-4 right-4 text-ab-muted hover:text-white transition-colors btn-interactive btn-interactive-ghost p-1 rounded-md"
+                className="absolute top-4 right-4 text-ab-muted hover:text-ab-text transition-colors btn-interactive btn-interactive-ghost p-1 rounded-md"
               >
                 <X className="w-5 h-5" />
               </button>
