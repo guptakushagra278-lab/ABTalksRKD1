@@ -3,15 +3,18 @@ import { useNavigate } from "react-router-dom";
 import AppShell from "@/src/components/AppShell";
 import { Button } from "@/src/components/ui/Button";
 import { mockTodayTask, mockAchievements } from "@/src/data";
-import { Flame, ArrowRight, X } from "lucide-react";
+import { Flame, ArrowRight, X, Sun, Moon } from "lucide-react";
 import { useAuth } from "@/src/components/AuthProvider";
+import { useTheme } from "@/src/components/ThemeProvider";
 import { BuildProject } from "@/src/types";
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { theme, setTheme } = useTheme();
   const [recentBuilds, setRecentBuilds] = useState<BuildProject[]>([]);
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [hoveredDay, setHoveredDay] = useState<number | null>(null);
 
   useEffect(() => {
     if (user && user.submissions) {
@@ -68,13 +71,22 @@ export default function Dashboard() {
           {/* Header */}
           <header className="mb-6">
             <div className="flex justify-between items-start">
-              <p className="text-xs font-mono text-ab-text font-bold uppercase tracking-widest">Good Evening, {user.username.toUpperCase()}</p>
-              <button 
-                onClick={() => setShowLogoutConfirm(true)} 
-                className="text-[10px] text-ab-muted hover:text-ab-text uppercase tracking-widest font-bold btn-interactive btn-interactive-ghost px-2 py-1 -mr-2 rounded"
-              >
-                Log out
-              </button>
+              <p className="text-xs font-mono text-ab-text font-bold uppercase tracking-widest mt-1">Good Evening, {user.username.toUpperCase()}</p>
+              <div className="flex items-center gap-2 -mr-2">
+                <button
+                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                  className="p-1 text-ab-muted hover:text-ab-text transition-colors btn-interactive"
+                  title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                >
+                  {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                </button>
+                <button 
+                  onClick={() => setShowLogoutConfirm(true)}
+                  className="text-[10px] text-ab-muted hover:text-ab-text uppercase tracking-widest font-bold btn-interactive btn-interactive-ghost px-2 py-1 rounded"
+                >
+                  Log out
+                </button>
+              </div>
             </div>
             <div className="flex justify-between items-end mt-4">
               <div>
@@ -154,6 +166,78 @@ export default function Dashboard() {
                 <div className="text-center">
                   <p className="text-sm font-black text-ab-text">{user.linkedinSubmissions}</p>
                   <p className="text-[8px] uppercase tracking-wider text-ab-muted mt-0.5 font-bold">LinkedIn</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Progress Calendar */}
+          <section className="mt-8">
+            <p className="text-[10px] uppercase font-bold text-ab-muted mb-4 tracking-widest px-1">60-Day Journey</p>
+            <div className="bg-ab-card p-4 rounded-2xl border border-ab-border-alt">
+              {/* Status Panel embedded in the card */}
+              <div className="h-7 mb-4 flex items-center justify-between px-3 bg-ab-surface/50 rounded-lg border border-ab-border transition-colors duration-200">
+                {hoveredDay ? (() => {
+                  const isCompleted = user.completedDays?.includes(hoveredDay);
+                  const isMissed = !isCompleted && hoveredDay < user.currentDay;
+                  const isCurrent = hoveredDay === user.currentDay;
+                  return (
+                    <>
+                      <span className="text-[11px] font-bold text-ab-text">Day {hoveredDay}</span>
+                      <span className={`text-[9px] uppercase tracking-wider font-bold ${
+                        isCompleted ? 'text-ab-accent' : 
+                        isMissed ? 'text-red-500' : 
+                        isCurrent ? 'text-ab-text' : 
+                        'text-ab-muted'
+                      }`}>
+                        {isCompleted ? 'Completed' : isMissed ? 'Missed' : isCurrent ? 'Current' : 'Upcoming'}
+                      </span>
+                    </>
+                  );
+                })() : (
+                  <span className="text-[9px] uppercase tracking-widest text-ab-muted font-bold mx-auto">
+                    Hover over a day to see status
+                  </span>
+                )}
+              </div>
+
+              <div className="grid grid-cols-10 gap-1.5">
+                {Array.from({ length: user.totalDays }).map((_, index) => {
+                  const day = index + 1;
+                  const isCompleted = user.completedDays?.includes(day);
+                  const isMissed = !isCompleted && day < user.currentDay;
+                  const isCurrent = day === user.currentDay;
+                  
+                  let bgColor = "bg-ab-card-alt border-ab-border-alt text-ab-muted";
+                  if (isCompleted) bgColor = "bg-ab-accent border-ab-accent text-ab-bg";
+                  else if (isMissed) bgColor = "bg-red-500/10 border-red-500/20 text-red-500/70";
+                  else if (isCurrent) bgColor = "bg-ab-accent/20 border-ab-accent/50 text-ab-accent animate-pulse";
+                  
+                  return (
+                    <div 
+                      key={day}
+                      onMouseEnter={() => setHoveredDay(day)}
+                      onMouseLeave={() => setHoveredDay(null)}
+                      title={`Day ${day}${isCompleted ? ' - Completed' : isMissed ? ' - Missed' : isCurrent ? ' - Current' : ''}`}
+                      className={`aspect-square rounded-[4px] border flex items-center justify-center text-[7px] font-bold transition-all duration-200 cursor-default hover:scale-110 hover:z-10 ${bgColor}`}
+                    >
+                      {day}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="flex justify-between items-center mt-5 px-1">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-[2px] bg-ab-accent"></div>
+                  <span className="text-[8px] uppercase font-bold tracking-widest text-ab-muted">Done</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-[2px] bg-red-500/10 border border-red-500/20"></div>
+                  <span className="text-[8px] uppercase font-bold tracking-widest text-ab-muted">Missed</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2 h-2 rounded-[2px] bg-ab-card-alt border border-ab-border-alt"></div>
+                  <span className="text-[8px] uppercase font-bold tracking-widest text-ab-muted">Pending</span>
                 </div>
               </div>
             </div>

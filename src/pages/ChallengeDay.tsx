@@ -18,6 +18,7 @@ export default function ChallengeDay() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submittedDay, setSubmittedDay] = useState<number | null>(null);
   
   const [formData, setFormData] = useState({
     githubRepo: "",
@@ -93,6 +94,7 @@ export default function ChallengeDay() {
         submissions: updatedSubmissions
       });
       
+      setSubmittedDay(day);
       setIsSubmitting(false);
       setIsSuccess(true);
     }, 1500);
@@ -167,7 +169,7 @@ export default function ChallengeDay() {
             transition={{ delay: 0.3 }}
             className="text-3xl font-black mb-2 tracking-tight uppercase text-ab-text"
           >
-            DAY {day} COMPLETE
+            DAY {submittedDay || day} COMPLETE
           </motion.h1>
           
           <motion.p 
@@ -190,7 +192,7 @@ export default function ChallengeDay() {
               {user.currentStreak} DAY STREAK
             </div>
             <p className="text-[10px] font-bold text-ab-muted uppercase tracking-widest mt-1">
-              Crossed {Math.round((day / user.totalDays) * 100)}% of the challenge
+              Crossed {Math.round(((submittedDay || day) / user.totalDays) * 100)}% of the challenge
             </p>
           </motion.div>
 

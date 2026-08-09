@@ -4,7 +4,8 @@
  */
 
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import ChallengeDay from "./pages/ChallengeDay";
@@ -20,18 +21,39 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  const shouldReduceMotion = useReducedMotion();
+  
+  return (
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 6 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -4 }}
+        transition={{ duration: shouldReduceMotion ? 0.01 : 0.3, ease: "easeOut" }}
+        className="w-full min-h-screen flex flex-col"
+      >
+        <Routes location={location}>
+          <Route path="/" element={<Landing />} />
+          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/day/:id" element={<ProtectedRoute><ChallengeDay /></ProtectedRoute>} />
+        </Routes>
+      </motion.div>
+    </AnimatePresence>
+  );
+};
+
 export default function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
         <Router>
-          <Routes>
-            <Route path="/" element={<Landing />} />
-            <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-            <Route path="/day/:id" element={<ProtectedRoute><ChallengeDay /></ProtectedRoute>} />
-          </Routes>
+          <AnimatedRoutes />
         </Router>
       </AuthProvider>
     </ThemeProvider>
   );
 }
+
