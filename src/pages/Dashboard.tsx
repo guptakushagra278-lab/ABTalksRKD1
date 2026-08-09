@@ -14,9 +14,10 @@ export default function Dashboard() {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   useEffect(() => {
-    const builds = JSON.parse(localStorage.getItem('abtalks_builds') || '[]');
-    setRecentBuilds(builds.reverse().slice(0, 3));
-  }, []);
+    if (user && user.submissions) {
+      setRecentBuilds([...user.submissions].reverse().slice(0, 3));
+    }
+  }, [user]);
 
   if (!user) {
     return null;

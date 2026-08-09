@@ -59,23 +59,38 @@ export default function ChallengeDay() {
     setIsSubmitting(true);
 
     setTimeout(() => {
-      const builds = JSON.parse(localStorage.getItem('abtalks_builds') || '[]');
-      builds.push({
+      const newSubmission = {
         day: day,
         title: mockTodayTask.title,
         githubRepo: formData.githubRepo,
         githubCommit: formData.githubCommit,
         linkedinPost: formData.linkedinPost,
         liveUrl: formData.liveUrl,
-      });
-      localStorage.setItem('abtalks_builds', JSON.stringify(builds));
+      };
+
+      const currentSubmissions = user.submissions || [];
+      const updatedSubmissions = [...currentSubmissions];
+      const existingSubmissionIndex = updatedSubmissions.findIndex(s => s.day === day);
+      if (existingSubmissionIndex !== -1) {
+        updatedSubmissions[existingSubmissionIndex] = newSubmission;
+      } else {
+        updatedSubmissions.push(newSubmission);
+        updatedSubmissions.sort((a, b) => a.day - b.day);
+      }
+
+      const currentCompletedDays = user.completedDays || [];
+      const updatedCompletedDays = currentCompletedDays.includes(day) 
+        ? currentCompletedDays 
+        : [...currentCompletedDays, day].sort((a, b) => a - b);
 
       updateUser({
         currentDay: user.currentDay + 1,
         currentStreak: user.currentStreak + 1,
         bestStreak: Math.max(user.bestStreak, user.currentStreak + 1),
-        completedBuilds: user.completedBuilds + 1,
-        momentum: Math.min(100, user.momentum + 5)
+        completedBuilds: updatedCompletedDays.length,
+        momentum: Math.min(100, user.momentum + 5),
+        completedDays: updatedCompletedDays,
+        submissions: updatedSubmissions
       });
       
       setIsSubmitting(false);

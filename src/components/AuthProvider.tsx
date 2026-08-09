@@ -12,6 +12,8 @@ export interface MockUser {
   linkedinSubmissions: number;
   momentum: number;
   track: string;
+  completedDays: number[];
+  submissions: any[];
 }
 
 interface AuthContextType {
@@ -39,19 +41,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const storedUser = localStorage.getItem('abtalks_user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsed = JSON.parse(storedUser);
+      if (!parsed.completedDays) parsed.completedDays = [];
+      if (!parsed.submissions) parsed.submissions = [];
+      setUser(parsed);
     }
     setLoading(false);
   }, []);
 
   const login = (username: string, email: string) => {
-    const existingStr = localStorage.getItem('abtalks_user');
-    if (existingStr) {
-      const existing = JSON.parse(existingStr);
-      if (existing.email === email && existing.username === username) {
-        setUser(existing);
-        return;
-      }
+    const usersStr = localStorage.getItem('abtalks_users');
+    const users = usersStr ? JSON.parse(usersStr) : {};
+    const key = `${username.toLowerCase()}_${email.toLowerCase()}`;
+
+    if (users[key]) {
+      if (!users[key].completedDays) users[key].completedDays = [];
+      if (!users[key].submissions) users[key].submissions = [];
+      setUser(users[key]);
+      localStorage.setItem('abtalks_user', JSON.stringify(users[key]));
+      return;
     }
     
     const newUser: MockUser = {
@@ -65,9 +73,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       completedBuilds: 0,
       linkedinSubmissions: 0,
       momentum: 0,
-      track: 'Full Stack Development'
+      track: 'Full Stack Development',
+      completedDays: [],
+      submissions: []
     };
     
+    users[key] = newUser;
+    localStorage.setItem('abtalks_users', JSON.stringify(users));
     localStorage.setItem('abtalks_user', JSON.stringify(newUser));
     setUser(newUser);
   };
@@ -81,6 +93,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (!user) return;
     const updated = { ...user, ...updates };
     localStorage.setItem('abtalks_user', JSON.stringify(updated));
+    
+    const usersStr = localStorage.getItem('abtalks_users');
+    const users = usersStr ? JSON.parse(usersStr) : {};
+    const key = `${user.username.toLowerCase()}_${user.email.toLowerCase()}`;
+    users[key] = updated;
+    localStorage.setItem('abtalks_users', JSON.stringify(users));
+    
     setUser(updated);
   };
 
