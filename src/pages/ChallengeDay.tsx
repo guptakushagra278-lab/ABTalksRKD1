@@ -205,9 +205,6 @@ export default function ChallengeDay() {
             <Button fullWidth onClick={() => navigate("/dashboard")} className="py-3">
               View your progress
             </Button>
-            <Button fullWidth variant="ghost" onClick={() => navigate("/dashboard")} className="py-3">
-              Back to dashboard
-            </Button>
           </motion.div>
         </div>
       </AppShell>
