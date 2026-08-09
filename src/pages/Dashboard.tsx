@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AppShell from "@/src/components/AppShell";
 import { Button } from "@/src/components/ui/Button";
 import { mockTodayTask, mockAchievements } from "@/src/data";
-import { Flame, ArrowRight } from "lucide-react";
+import { Flame, ArrowRight, X } from "lucide-react";
 import { useAuth } from "@/src/components/AuthProvider";
 import { BuildProject } from "@/src/types";
 
@@ -11,6 +11,7 @@ export default function Dashboard() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const [recentBuilds, setRecentBuilds] = useState<BuildProject[]>([]);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   useEffect(() => {
     const builds = JSON.parse(localStorage.getItem('abtalks_builds') || '[]');
@@ -23,6 +24,41 @@ export default function Dashboard() {
 
   return (
     <AppShell>
+      {showLogoutConfirm && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-ab-bg/80 backdrop-blur-sm">
+          <div className="w-full max-w-sm bg-ab-card border border-ab-border-alt rounded-2xl shadow-2xl relative overflow-hidden">
+            <button 
+              onClick={() => setShowLogoutConfirm(false)}
+              className="absolute top-4 right-4 text-ab-muted hover:text-ab-text transition-colors btn-interactive btn-interactive-ghost p-1 rounded-md"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <div className="p-8">
+              <h2 className="text-xl font-black uppercase text-ab-text mb-2">Sign out?</h2>
+              <p className="text-sm text-ab-muted mb-8">Are you sure you want to log out of your account?</p>
+              <div className="flex gap-3">
+                <Button 
+                  variant="outline" 
+                  fullWidth 
+                  onClick={() => setShowLogoutConfirm(false)}
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  variant="primary" 
+                  fullWidth 
+                  onClick={() => {
+                    logout();
+                    navigate('/');
+                  }}
+                >
+                  Log out
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="px-4 pt-6 pb-28 space-y-6 flex flex-col items-center">
         
         {/* Main Dashboard Card wrapper to match design */}
@@ -33,7 +69,7 @@ export default function Dashboard() {
             <div className="flex justify-between items-start">
               <p className="text-xs font-mono text-ab-text font-bold uppercase tracking-widest">Good Evening, {user.username.toUpperCase()}</p>
               <button 
-                onClick={() => { logout(); navigate('/'); }} 
+                onClick={() => setShowLogoutConfirm(true)} 
                 className="text-[10px] text-ab-muted hover:text-ab-text uppercase tracking-widest font-bold btn-interactive btn-interactive-ghost px-2 py-1 -mr-2 rounded"
               >
                 Log out

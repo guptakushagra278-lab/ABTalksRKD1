@@ -8,6 +8,7 @@ import { mockTodayTask } from "@/src/data";
 import { ChevronLeft, CheckCircle2, Flame, Loader2 } from "lucide-react";
 import { cn } from "@/src/lib/utils";
 import { useAuth } from "@/src/components/AuthProvider";
+import { motion } from "motion/react";
 
 export default function ChallengeDay() {
   const navigate = useNavigate();
@@ -95,14 +96,79 @@ export default function ChallengeDay() {
   if (isSuccess) {
     return (
       <AppShell>
-      <div className="flex flex-col items-center justify-center min-h-[80vh] px-6 text-center animate-in fade-in zoom-in duration-500">
-          <div className="w-20 h-20 bg-ab-accent/20 text-ab-accent rounded-full flex items-center justify-center mb-6">
-            <CheckCircle2 className="w-10 h-10" />
+        <div className="flex flex-col items-center justify-center min-h-[80vh] px-6 text-center">
+          {/* Confetti Particles */}
+          <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center overflow-hidden">
+            {Array.from({ length: 50 }).map((_, i) => {
+              const angle = Math.random() * Math.PI * 2;
+              const velocity = 50 + Math.random() * 200;
+              const size = 6 + Math.random() * 6;
+              const colors = ["var(--color-ab-accent)", "var(--color-ab-text)", "var(--color-ab-border)", "var(--color-ab-muted)"];
+              return (
+                <motion.div
+                  key={i}
+                  initial={{ x: 0, y: 0, scale: 0, opacity: 1 }}
+                  animate={{
+                    x: Math.cos(angle) * velocity,
+                    y: Math.sin(angle) * velocity + (Math.random() * 200),
+                    scale: [0, 1, 0.5],
+                    opacity: [1, 1, 0],
+                    rotate: Math.random() * 360,
+                  }}
+                  transition={{
+                    duration: 1.5 + Math.random(),
+                    ease: "easeOut",
+                  }}
+                  className="absolute rounded-sm"
+                  style={{
+                    width: size,
+                    height: size,
+                    backgroundColor: colors[i % colors.length],
+                  }}
+                />
+              );
+            })}
           </div>
-          <h1 className="text-3xl font-black mb-2 tracking-tight uppercase text-ab-text">DAY {day} COMPLETE</h1>
-          <p className="text-ab-secondary mb-8 text-sm">Your build has been submitted.</p>
+
+          <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", bounce: 0.5 }}
+            className="w-20 h-20 bg-ab-accent/20 text-ab-accent rounded-full flex items-center justify-center mb-6"
+          >
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", bounce: 0.6 }}
+            >
+              <CheckCircle2 className="w-10 h-10" />
+            </motion.div>
+          </motion.div>
           
-          <div className="bg-ab-card border border-ab-border-alt rounded-2xl p-6 mb-10 w-full max-w-sm">
+          <motion.h1 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="text-3xl font-black mb-2 tracking-tight uppercase text-ab-text"
+          >
+            DAY {day} COMPLETE
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-ab-secondary mb-8 text-sm"
+          >
+            Your build has been submitted.
+          </motion.p>
+          
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.5, type: "spring" }}
+            className="bg-ab-card border border-ab-border-alt rounded-2xl p-6 mb-10 w-full max-w-sm"
+          >
             <div className="inline-flex items-center text-ab-accent font-black text-xl italic mb-2">
               <Flame className="w-5 h-5 mr-2" fill="currentColor" />
               {user.currentStreak} DAY STREAK
@@ -110,16 +176,21 @@ export default function ChallengeDay() {
             <p className="text-[10px] font-bold text-ab-muted uppercase tracking-widest mt-1">
               Crossed {Math.round((day / user.totalDays) * 100)}% of the challenge
             </p>
-          </div>
+          </motion.div>
 
-          <div className="w-full max-w-sm space-y-3">
+          <motion.div 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="w-full max-w-sm space-y-3"
+          >
             <Button fullWidth onClick={() => navigate("/dashboard")} className="py-3">
               View your progress
             </Button>
             <Button fullWidth variant="ghost" onClick={() => navigate("/dashboard")} className="py-3">
               Back to dashboard
             </Button>
-          </div>
+          </motion.div>
         </div>
       </AppShell>
     );
